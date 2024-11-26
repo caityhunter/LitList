@@ -22,7 +22,7 @@ namespace LitList.Pages_Users
 
         public async Task OnGetAsync()
         {
-            User = await _context.Users.ToListAsync();
+            User = await _context.Users.Include(u => u.UserBooks!).ThenInclude(ub => ub.Book).ToListAsync();
         }
     }
 }

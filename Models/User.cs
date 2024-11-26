@@ -14,5 +14,6 @@ public class User
 
     public string Bio {get; set;} = string.Empty;
 
+    [Display(Name = "Books Read")]
     public List<UserBook>? UserBooks {get; set;} = default!;
 }

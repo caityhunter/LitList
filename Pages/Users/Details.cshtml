@@ -29,6 +29,15 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.User.Bio)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User.UserBooks)
+        </dt>
+        <dd class="col-sm-10">
+            @foreach(var book in Model.User.UserBooks!)
+            {
+                @Html.DisplayFor(model => book.Book.Title)<br>
+            }
+        </dd>
     </dl>
 </div>
 <div>

@@ -24,9 +24,9 @@
                     </div>
                     <div class="col-2">
                         <div class="text-end">
-                            <button class="btn btn-primary" type="button">
+                            <a asp-page="./Edit" asp-route-id="@user.UserID" class="btn btn-primary" role="button">
                                 <i class="bi bi-pen"></i>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,18 @@
                     @book.Book.Title <br />
                 }
                 <hr>
-                <small class="text-body-secondary">Date Joined: @Html.DisplayFor(modelItem => user.DateJoined)</small>
+                <div class="row">
+                    <div class="col-10">
+                        <small class="text-body-secondary">Date Joined: @Html.DisplayFor(modelItem => user.DateJoined)</small>
+                    </div>
+                    <div class="col-2">
+                        <div class="text-end">
+                            <a asp-page="Delete" asp-route-id="@user.UserID" class="btn btn-danger" role="button">
+                                <i class="bi bi-x"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     }

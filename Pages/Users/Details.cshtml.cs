@@ -18,7 +18,43 @@ namespace LitList.Pages_Users
             _context = context;
         }
 
+        [BindProperty]
         public User User { get; set; } = default!;
+
+        [BindProperty]
+        public int BookIDToDelete {get; set;}
+
+        public IActionResult OnPostRemoveBook (int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = _context.Users.Include(u => u.UserBooks).ThenInclude(ub => ub.Book).FirstOrDefault(m => m.UserID == id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                User = user;
+            }
+            // BookDropDown = new SelectList(_context.Books.ToList(), "BookID", "Title");
+
+            var bookToRemove = _context.UserBooks.Find(BookIDToDelete, id);
+
+            if (bookToRemove != null)
+            {
+                _context.Remove(bookToRemove);
+                _context.SaveChanges();
+            }
+
+            return RedirectToPage(new {id = id});
+
+        }
+
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

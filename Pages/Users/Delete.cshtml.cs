@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using LitList.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LitList.Pages_Users
 {
@@ -21,6 +22,7 @@ namespace LitList.Pages_Users
         [BindProperty]
         public User User { get; set; } = default!;
 
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -28,7 +30,7 @@ namespace LitList.Pages_Users
                 return NotFound();
             }
 
-            var user = await _context.Users.FirstOrDefaultAsync(m => m.UserID == id);
+            var user = await _context.Users.Include(u => u.UserBooks!).ThenInclude(ub => ub.Book).FirstOrDefaultAsync(m => m.UserID == id);
 
             if (user is not null)
             {

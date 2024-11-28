@@ -8,7 +8,17 @@
     <h1>LitList's Books</h1>
     <br />
 </div>
-
+<div class="row">
+    <form class="d-flex" role="search" asp-page="./Books" method="get">
+        <div class="col-12 my-2">
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input class="form-control me-2" type="search" name="CurrentSearch" value="@Model.CurrentSearch" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
 <div>
     <table class="table">
         <thead>

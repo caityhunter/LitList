@@ -18,11 +18,20 @@ public class BooksModel : PageModel
         _context = context;
     }
 
+    [BindProperty(SupportsGet = true)]
+    public string CurrentSearch {get; set;} = string.Empty;
+
     public IList<Book> Book { get;set; } = default!;
 
     public async Task OnGetAsync()
     {
         var query = _context.Books.Select(s => s);
+        
+        if (!string.IsNullOrEmpty(CurrentSearch))
+            {
+                query = query.Where(s => s.Title.Contains(CurrentSearch) || s.Author.Contains(CurrentSearch) || s.Genre.Contains(CurrentSearch));
+            }
+
 
         switch (CurrentSort)
         {

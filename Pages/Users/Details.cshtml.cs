@@ -61,8 +61,7 @@ namespace LitList.Pages_Users
             return RedirectToPage(new {id = id});
 
         }
-
-
+        
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)

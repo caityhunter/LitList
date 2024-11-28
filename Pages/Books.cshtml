@@ -1,0 +1,79 @@
+@page
+@model BooksModel
+@{
+    ViewData["Title"] = "Book Database";
+}
+
+<div class="text-center">
+    <h1>LitList's Books</h1>
+    <br />
+</div>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @{
+                        var titleSort = "title_asc";
+                        if (Model.CurrentSort == "title_asc")
+                        {
+                            titleSort = "title_desc";
+                        }
+                    }
+                    <a asp-page="./Books" asp-route-CurrentSort="@titleSort">@Html.DisplayNameFor(model => model.Book[0].Title)</a>
+                </th>
+                <th>
+                    @{
+                        var authorSort = "author_asc";
+                        if (Model.CurrentSort == "author_asc")
+                        {
+                            authorSort = "author_desc";
+                        }
+                    }
+                    <a asp-page="./Books" asp-route-CurrentSort="@authorSort">@Html.DisplayNameFor(model => model.Book[0].Author)</a>
+                </th>
+                <th>
+                    @{
+                        var genreSort = "genre_asc";
+                        if (Model.CurrentSort == "genre_asc")
+                        {
+                            genreSort = "genre_desc";
+                        }
+                    }
+                    <a asp-page="./Books" asp-route-CurrentSort="@genreSort">@Html.DisplayNameFor(model => model.Book[0].Genre)</a>
+                </th>
+                <th>
+                    @{
+                        var pageSort = "pages_asc";
+                        if (Model.CurrentSort == "pages_asc")
+                        {
+                            pageSort = "pages_desc";
+                        }
+                    }
+                    <a asp-page="./Books" asp-route-CurrentSort="@pageSort">@Html.DisplayNameFor(model => model.Book[0].Pages)</a>
+                </th>
+             
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model.Book)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => book.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => book.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => book.Genre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => book.Pages)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -32,6 +32,12 @@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.User.UserBooks)
         </dt>
+        <dd>
+            @foreach (var book in Model.User.UserBooks!)
+                {
+                    @book.Book.Title <br />
+                }
+        </dd>
     </dl>
     
     <form method="post">

@@ -29,7 +29,9 @@ public class BooksModel : PageModel
         
         if (!string.IsNullOrEmpty(CurrentSearch))
             {
-                query = query.Where(s => s.Title.Contains(CurrentSearch) || s.Author.Contains(CurrentSearch) || s.Genre.Contains(CurrentSearch));
+                query = query.Where(s => s.Title.ToUpper().Contains(CurrentSearch.ToUpper()) 
+                    || s.Author.ToUpper().Contains(CurrentSearch.ToUpper()) 
+                    || s.Genre.ToUpper().Contains(CurrentSearch.ToUpper()));
             }
 
 

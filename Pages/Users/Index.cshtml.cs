@@ -13,6 +13,11 @@ namespace LitList.Pages_Users
     {
         private readonly LitList.Models.AppDbContext _context;
 
+        [BindProperty(SupportsGet = true)]
+        public int PageNum {get; set;} = 1;
+        public int PageSize {get; set;} = 5;
+        public int TotalPages {get; set;}
+
         public IndexModel(LitList.Models.AppDbContext context)
         {
             _context = context;
@@ -22,7 +27,10 @@ namespace LitList.Pages_Users
 
         public async Task OnGetAsync()
         {
-            User = await _context.Users.Include(u => u.UserBooks!).ThenInclude(ub => ub.Book).ToListAsync();
+            TotalPages = (int)Math.Ceiling(_context.Users.Count() / (double)PageSize);
+
+            User = await _context.Users.Include(u => u.UserBooks!).ThenInclude(ub => ub.Book)
+                .Skip((PageNum-1)*PageSize).Take(PageSize).ToListAsync();
         }
     }
 }

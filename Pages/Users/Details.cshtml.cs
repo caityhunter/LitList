@@ -71,16 +71,18 @@ namespace LitList.Pages_Users
 
             var user = await _context.Users.Include(u => u.UserBooks!).ThenInclude(ub => ub.Book).FirstOrDefaultAsync(m => m.UserID == id);
 
-            if (user is not null)
+            if (user == null)
+            {
+                return NotFound();
+            }
+            else
             {
                 User = user;
-
-                BooksDropDown = new SelectList(_context.Books.ToList().OrderBy(b => b.Title), "BookID", "Title");
-
-                return Page();
             }
 
-            return NotFound();
+            BooksDropDown = new SelectList(_context.Books.ToList().OrderBy(b => b.Title), "BookID", "Title");
+
+            return Page();
         }
 
         public IActionResult OnPostAddBook(int? id)

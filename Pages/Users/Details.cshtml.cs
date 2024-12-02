@@ -76,7 +76,7 @@ namespace LitList.Pages_Users
             }
             BooksDropDown = new SelectList(_context.Books.ToList().OrderBy(b => b.Title), "BookID", "Title");
 
-            var bookToRemove = _context.UserBooks.Find(BookIDToDelete, id);
+            var bookToRemove = _context.UserBooks.Find(id, BookIDToDelete);
 
             if (bookToRemove != null)
             {

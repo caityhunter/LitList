@@ -31,6 +31,32 @@ namespace LitList.Pages_Users
         [Required]
         public int BookIDToAdd {get; set;}
         public SelectList BooksDropDown {get; set;} = default!;
+
+        // OnGetAsync
+        public async Task<IActionResult> OnGetAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users.Include(u => u.UserBooks!).ThenInclude(ub => ub.Book).FirstOrDefaultAsync(m => m.UserID == id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                User = user;
+            }
+
+            BooksDropDown = new SelectList(_context.Books.ToList().OrderBy(b => b.Title), "BookID", "Title");
+
+            return Page();
+        }
+
+        // OnPostRemoveBook
         public IActionResult OnPostRemoveBook (int? id)
         {
             if (id == null)
@@ -62,29 +88,7 @@ namespace LitList.Pages_Users
 
         }
         
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _context.Users.Include(u => u.UserBooks!).ThenInclude(ub => ub.Book).FirstOrDefaultAsync(m => m.UserID == id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                User = user;
-            }
-
-            BooksDropDown = new SelectList(_context.Books.ToList().OrderBy(b => b.Title), "BookID", "Title");
-
-            return Page();
-        }
-
+        // OnPostAddBook
         public IActionResult OnPostAddBook(int? id)
         {
             if (id == null)
